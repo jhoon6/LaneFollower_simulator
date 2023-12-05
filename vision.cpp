@@ -10,7 +10,7 @@ Mat preprocess(Mat input){
     GaussianBlur(cut_gray, cut_gray, Size(9, 9), 3, 3);
     writer3 << cut_gray;
 
-    threshold(cut_gray, cut_gray, 210, 256, THRESH_BINARY);
+    threshold(cut_gray, cut_gray, 225, 256, THRESH_BINARY);
     morphologyEx(cut_gray, cut_gray, MORPH_CLOSE, getStructuringElement(0, Size(7, 7)));
     
     return cut_gray;

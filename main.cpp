@@ -40,7 +40,7 @@ int main(void)
         }
 
         source >> frame;
-        if (frame.empty()) {cerr << "frame empty!" << endl; break; }
+        if (frame.empty()) { source.set(CAP_PROP_POS_FRAMES, 0); source >> frame; /*cerr << "frame empty!" << endl; break;*/ }
         writer1 << frame;
 
         Mat cut_gray = preprocess(frame);
