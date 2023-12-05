@@ -26,7 +26,7 @@ int main(void)
 
     bool allow_to_start = false;
 
-    int def_speed = 200;
+    int def_speed = 100;
     double k = 0.32;
 
     while (true)
@@ -45,7 +45,7 @@ int main(void)
 
         Mat cut_gray = preprocess(frame);
 
-        error = -1 * calc_err(cut_gray);
+        error = calc_err(cut_gray) - 320;
 
         if (allow_to_start){
             vel1 = def_speed + (error*k);
