@@ -22,16 +22,12 @@ int main(void)
     signal(SIGINT, ctrlc_handler);
     if (!mx.open()) { cout << "dynamixel open error" << endl; return -1; }
 
-    static int prev_error_l = 0;
-    static int error_l = 0;
-    static int prev_error_r = 0;
-    static int error_r = 0;
-    int error = 0;
+    static int error = 0;
 
     bool allow_to_start = false;
 
-    int def_speed = 100;
-    double k = 0.25;
+    int def_speed = 200;
+    double k = 0.32;
 
     while (true)
     {
@@ -44,15 +40,12 @@ int main(void)
         }
 
         source >> frame;
-        if (frame.empty()) { source.set(CAP_PROP_POS_FRAMES, 0); source >> frame; /*cerr << "frame empty!" << endl; break;*/ }
+        if (frame.empty()) {cerr << "frame empty!" << endl; break; }
         writer1 << frame;
 
         Mat cut_gray = preprocess(frame);
 
-        error_l = -1 * calc_err(cut_gray(Rect(0,0,320,90)), prev_error_l, true);
-        error_r = -1 * calc_err(cut_gray(Rect(320,0,320,90)), prev_error_r, false);
-
-        error = (error_l+error_r)/2;
+        error = -1 * calc_err(cut_gray);
 
         if (allow_to_start){
             vel1 = def_speed + (error*k);
@@ -66,8 +59,6 @@ int main(void)
         gettimeofday(&end1, NULL);
         time1 = end1.tv_sec - start.tv_sec + (end1.tv_usec - start.tv_usec) / 1000000.0;
         cout << "vel1:" << vel1 << ',' << "vel2:" << vel2 << ",time:" << time1 << ", error: " << error << endl;
-        prev_error_l = error_l;
-        prev_error_r = error_r;
     }
     mx.close(); // 장치닫기
     return 0;

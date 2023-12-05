@@ -11,7 +11,7 @@
 using namespace std;
 using namespace cv;
 
-int calc_err(Mat gray_img, int prev_error, bool isLeft);
+int calc_err(Mat gray_img);
 Mat preprocess(Mat input);
 
 #endif
