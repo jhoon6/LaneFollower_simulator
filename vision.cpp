@@ -6,12 +6,12 @@ Mat preprocess(Mat input){
 
     Mat cut_gray;
     cvtColor(input(Rect(0, 270, 640, 90)), cut_gray, COLOR_BGR2GRAY);
-    cut_gray = cut_gray + (Scalar(200) - mean(cut_gray));
+    cut_gray = cut_gray + (Scalar(180) - mean(cut_gray));
     GaussianBlur(cut_gray, cut_gray, Size(9, 9), 3, 3);
     writer3 << cut_gray;
 
     threshold(cut_gray, cut_gray, 225, 256, THRESH_BINARY);
-    morphologyEx(cut_gray, cut_gray, MORPH_CLOSE, getStructuringElement(0, Size(12, 7)));
+    morphologyEx(cut_gray, cut_gray, MORPH_CLOSE, getStructuringElement(0, Size(7, 7)));
     
     return cut_gray;
 }
