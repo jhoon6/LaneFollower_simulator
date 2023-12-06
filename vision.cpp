@@ -10,8 +10,8 @@ Mat preprocess(Mat input){
     GaussianBlur(cut_gray, cut_gray, Size(9, 9), 3, 3);
     writer3 << cut_gray;
 
-    threshold(cut_gray, cut_gray, 230, 256, THRESH_BINARY);
-    morphologyEx(cut_gray, cut_gray, MORPH_CLOSE, getStructuringElement(0, Size(9, 9)));
+    threshold(cut_gray, cut_gray, 235, 256, THRESH_BINARY);
+    morphologyEx(cut_gray, cut_gray, MORPH_CLOSE, getStructuringElement(MORPH_ELLIPSE, Size(9, 9)));
     
     return cut_gray;
 }
@@ -44,7 +44,7 @@ int calc_err(Mat gray_img) {
         Point r_center = (r.br() + r.tl()) * 0.5;
         drawMarker(dst, r_center, Scalar(0, 0, 255), 0, 10, 2, 8);
         //L
-        if (p[1]+p[3] > 80) {
+        if (p[1]+p[3] > 60) {
             int diff = (center_variable_l.x - r_center.x);
             if (diff < 180 && diff > -180 && norm(center_variable_l-r_center) < 180) {
                 //drawMarker(dst, findCentroid(cut_gray, r), Scalar(255, 128, 0), 1, 10, 2, 8);
@@ -54,7 +54,7 @@ int calc_err(Mat gray_img) {
             }
         }
         //R
-        if (p[1]+p[3] > 80) {
+        if (p[1]+p[3] > 60) {
             int diff = (center_variable_r.x - r_center.x);
             if (diff < 180 && diff > -180 && norm(center_variable_r-r_center) < 180) {
                 //drawMarker(dst, findCentroid(cut_gray, r), Scalar(255, 128, 0), 1, 10, 2, 8);

@@ -11,7 +11,7 @@ int main(void)
     string src = "nvarguscamerasrc sensor-id=0 ! video/x-raw(memory:NVMM), width=(int)640, height=(int)360, format=(string)NV12 ! nvvidconv flip-method=0 ! video/x-raw, width=(int)640, height=(int)360, format=(string)BGRx ! videoconvert ! video/x-raw, format=(string)BGR ! appsink";
     //VideoCapture source(src, CAP_GSTREAMER);
 
-    VideoCapture source("./vid/lanefollow_100rpm_cw.mp4");
+    VideoCapture source("./vid/lanefollow_100rpm_ccw.mp4");
 
     Mat frame;
 
